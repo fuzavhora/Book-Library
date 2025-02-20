@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2025 at 05:59 AM
+-- Generation Time: Feb 20, 2025 at 10:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,12 +43,19 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`id`, `name`, `price`, `des`, `type`, `createdAt`, `public`, `author`) VALUES
-(1, 'Living in the Light: A guide to personal transformation', 200, 'Live as if you were to die tomorrow. Learn as if you were to live forever.', 'Self Improvment', '2025-02-13 06:18:09.339', 1, 9),
-(2, 'Cambridge IGCSE ICT 2nd Edition', 250, 'When you talk, you are only repeating what you already know. But if you listen, you may learn something new.', 'ICT', '2025-02-13 06:19:26.324', 1, 9),
-(3, 'The Glass Castle: A Memoir by Jeannette Walls', 289, 'Love only grows by sharing. You can only have more for yourself by giving it away to others', 'Biography', '2025-02-13 06:25:18.520', 1, 10),
-(4, ' Hillbilly Elegy: A Memoir of a Family and Culture in Crisis', 149, 'A memories of a Family and Culture in Crisis', 'Biography', '2025-02-13 06:27:23.271', 1, 10),
-(5, 'How to Win Every Argument', 189, ' Don\'t fear change. The surprise is the only way to new discoveries. Be playful!', 'Buisness & Career', '2025-02-13 06:30:47.466', 1, 11),
-(6, 'The Rules of Work: A Definitive Code for Personal Success', 249, 'If you want to become full, let yourself be empty.', 'Buisness & Career', '2025-02-13 06:33:13.598', 1, 12);
+(1, 'The Rules of Work: A Definitive Code for Personal Success', 249, 'If you want to become full, let yourself be empty.', 'Buisness & Career', '2025-02-20 05:12:53.565', 1, 2),
+(2, 'Book-1', 249, 'Authoer 1 book1 type1', 'type-1', '2025-02-20 06:03:40.557', 1, 11),
+(3, 'Book-2', 249, 'Authoer 1 book2 type2', 'type-2', '2025-02-20 06:04:09.907', 1, 11),
+(4, 'Book-3', 249, 'Authoer 1 book3 type3', 'type-3', '2025-02-20 06:04:21.457', 1, 11),
+(5, 'Book-4', 249, 'Authoer 1 book4 type4', 'type-4', '2025-02-20 06:04:35.396', 1, 11),
+(6, 'Book-2-2', 249, 'Authoer 2 book2 type2', 'type-2', '2025-02-20 06:05:47.028', 1, 12),
+(7, 'Book-2-1', 249, 'Authoer 2 book1 type1', 'type-1', '2025-02-20 06:06:00.881', 1, 12),
+(8, 'Book-2-3', 249, 'Authoer 2 book3 type3', 'type-3', '2025-02-20 06:06:12.468', 1, 12),
+(9, 'Book-2-4', 249, 'Authoer 2 book4 type4', 'type-4', '2025-02-20 06:06:22.445', 1, 12),
+(10, 'Book-3-1', 249, 'Authoer 2 book1 type1', 'type-1', '2025-02-20 06:07:29.662', 1, 13),
+(11, 'Book-3-2', 249, 'Authoer 3 book2 type2', 'type-2', '2025-02-20 06:07:49.923', 1, 13),
+(12, 'Book-3-3', 249, 'Authoer 3 book3 type3', 'type-3', '2025-02-20 06:08:00.821', 1, 13),
+(13, 'Book-3-4', 249, 'Authoer 3 book4 type4', 'type-4', '2025-02-20 06:08:15.164', 1, 13);
 
 --
 -- Indexes for dumped tables
@@ -69,7 +76,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

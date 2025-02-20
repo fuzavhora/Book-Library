@@ -16,22 +16,36 @@ datasource db {
 
 
 model user {
-  id          Int             @id @default(autoincrement())
-  name        String
-  email       String          @unique
-  password    String
-  img         String?
-  role_id        Int
-  role         role   @relation(fields: [role_id], references: [role_id])
-  book        book[]
-  addtocart  addtocart[]
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  password      String
+  img           String?
+  role_id       Int
+  role          role            @relation(fields: [role_id], references: [id])
+  addtocart     addtocart[]
+  payment       payment[]
+}
+
+model author {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String          @unique
+  password      String
+  img           String?
+  role_id       Int
+  Income        Int?          
+  role          role            @relation(fields: [role_id], references: [id])
+  book          book[]
+  addtocart     addtocart[]
 }
 
 
 model role {
-  role_id   Int     @id @default(autoincrement())
-  name      String
-  user        user[]
+  id      Int             @id @default(autoincrement())
+  name         String
+  user         user[]
+  author       author[]
 }
 
 
@@ -41,17 +55,45 @@ model book {
   price         Int
   des           String
   type          String
-  author        Int         
-  user          user        @relation(fields: [author], references: [id])
-  createdAt     DateTime    @default(now()) 
-  public        Boolean     @default(true)       
+  author_id     Int         
+  author        author        @relation(fields: [author_id], references: [id])
+  createdAt     DateTime      @default(now()) 
+  public        Boolean       @default(true)       
   addtocart     addtocart[]  
+  payment       payment[]
 }
 
 model addtocart {
-  id          Int           @id @default(autoincrement())
-  book_id     Int
-  user_id     Int
-  user          user        @relation(fields: [user_id], references: [id])
-  book          book        @relation(fields: [book_id], references: [id])
+  id             Int           @id @default(autoincrement())
+  book_id        Int
+  user_id        Int
+  quantity       Int
+  user           user          @relation(fields: [user_id], references: [id])
+  book           book          @relation(fields: [book_id], references: [id])
+  payment        payment[]
+  author         author[]
+}
+
+model payment_method{
+  id            Int            @unique
+  name          String     
+  payment       payment[]
+}
+
+model payment {
+  id                  Int                   @id @default(autoincrement())
+  user_id             Int
+  upi_id              String?
+  credit_card_num     Int?
+  Expriry             Int?
+  Cvv                 Int?
+  books               Int
+  payment_type        Int   
+  cart_id             Int
+  total_price         Int      
+  book                book                  @relation(fields: [books], references:[id])
+  author_profit       Int
+  addtocart           addtocart             @relation(fields : [cart_id], references:[id])
+  user                user                  @relation(fields: [user_id], references: [id])
+  payment_method      payment_method        @relation(fields: [payment_type], references: [id])
 }

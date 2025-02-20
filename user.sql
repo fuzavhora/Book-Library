@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2025 at 05:58 AM
+-- Generation Time: Feb 20, 2025 at 10:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,15 +41,17 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `img`, `role_id`) VALUES
-(4, 'admin', 'admin@test.com', '$2a$10$vJELSOG5JPPLK6G/iub5DuWJ9fR4Fr1Q1nAQoVAWq221vea8Rg9F6', NULL, 1),
-(5, 'author', 'author@test.com', '$2a$10$GjGmSrhrIRjlPaoyaHA2curGAfZhN/2qO.8pgck3MJ/tH65aphwYG', NULL, 2),
-(6, 'user1', 'user1@test.com', '$2a$10$c99kFlGEet0lqqM/jYm0iegMPpDLSFmg0RzQJbP/xawLkBE.2MWf.', NULL, 3),
-(7, 'user2', 'user2@test.com', '$2a$10$H7jbdO/vAm3gLFmvJM7zE.n/NwgcoKY9gWg558piVY0sWNgbMIiC.', NULL, 3),
-(8, 'user3', 'user3@test.com', '$2a$10$gtcpjV0/oxX8v47M6VBtCup6C6mqCF8JJhyM6RQQ1lGeXoXk5o8Qi', NULL, 3),
-(9, 'David Sargent', 'david@author.com', '$2a$10$UT8XJBVMKM2BCYtitlkno.nELtVHRLj49tsqAA8dYyXvZ7XxQuQoS', NULL, 2),
-(10, 'Brian Tracy', 'Brian@author.com', '$2a$10$KUtDoU/HY8osv4pYqFZX1ewYfGA.fQGYVsT5zCPr8ENxZ32pgDNKq', NULL, 2),
-(11, 'Madsen Pirie', 'madsen@author.com', '$2a$10$MTqtvXk7ECckk2Z6qk6toeXVH3DZ4kTh/K12QYAZ3tZu0Sg.ojav6', NULL, 2),
-(12, 'Richard Templar', 'richard@author.com', '$2a$10$vYDX3iscpdGA7z5/CZjVL.b6SI1TWBJFSQWp1J0gQsa9sAHezzTui', NULL, 2);
+(2, 'Richard Templar', 'richard@author.com', '$2a$10$1fdMhHD..NPgoIByGgAa4eps8.wxXfm1vK5aCS3i3oYUMHGhoJ.zm', NULL, 2),
+(3, 'Admin', 'admin@admin.com', '$2a$10$QrN1M7LuThzj1H8zSMzzZO8YlO8xB6Ck/bapnblsNr2ei1NDPWJ8y', NULL, 1),
+(4, 'user1', 'user1@user.com', '$2a$10$QhjcXNwirZn9YQQe7ppii.LZ/lRUi6b5nTNBIPwU65PCxKc30cyFe', NULL, 3),
+(5, 'user2', 'user2@user.com', '$2a$10$VsCzZbVF.xZXmrpA1Xje8OAn/texu/jXL/1Kogr7cFYNgU9W1gvHu', NULL, 3),
+(6, 'user3', 'user3@user.com', '$2a$10$8dzx1/3L/Cz288J.sv7edeqYBYviZVJVC/Ce6F1/kMeqYJugaXJNe', NULL, 3),
+(7, 'user5', 'user5@user.com', '$2a$10$b1uADAV4LfQ3UlPBIbBCke3yjMNVqcfSIJNWcf4hhkL9.pun1RWe2', NULL, 3),
+(8, 'user4', 'user4@user.com', '$2a$10$LScxk/buPOXbmoZ7ivrr7uWt.T.Ogblyrs1RVW1sWDGhk0OcEhxji', NULL, 3),
+(11, 'Author1', 'author1@author.com', '$2a$10$Q38VI4kOBhTGbtEn98xz7epXy9DTaK6NGZuwRvo0Il1J9.4F5165a', NULL, 2),
+(12, 'Author2', 'author2@author.com', '$2a$10$6ivFk3IQ5l/g9xVos2j3welc021GigSrPOOKzx9eZkz.I4I8eIj7u', NULL, 2),
+(13, 'Author3', 'author3@author.com', '$2a$10$hwUyJsIPxScv98V1bdZdfeTC05wHz2FT01eVuTlitqux.psV38mHK', NULL, 2),
+(14, 'Author4', 'author4@author.com', '$2a$10$sbKszMgWA4tdBGG/ynNhOeOIi2GwLi/cpHFmqofV5hr0sw/n70b86', NULL, 2);
 
 --
 -- Indexes for dumped tables
@@ -71,7 +73,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

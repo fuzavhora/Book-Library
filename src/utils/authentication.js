@@ -130,4 +130,36 @@ const adminAuth = (role) => {
   };
 };
 
-module.exports = { auth, bookExist, userAuth, adminAuth };
+const cartAuth = () => {
+  return async (req, res, next) => {
+    let token = req.headers.authorization;
+
+    if (!token) {
+      return res
+        .status(401)
+        .send({ message: "Ohh you ar not logged Please Login!" });
+    }
+    try {
+      const data = JWT.verify(token, process.env.JWT_SECRET);
+
+      const user = await prisma.user.findUnique({
+        where: {
+          id: data.id,
+        },
+      });
+      console.log(user);
+      if (!user) {
+        return res.status(404).send({ message: "Please Login again" });
+      }
+      req.user = user;
+      next();
+    } catch (e) {
+      console.error("JWT Verification Error:", e);
+      return res
+        .status(403)
+        .send({ message: "Invalid or expired token", error: e.message });
+    }
+  };
+};
+
+module.exports = { auth, bookExist, userAuth, adminAuth, cartAuth };
