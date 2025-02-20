@@ -24,6 +24,7 @@ model user {
   role_id        Int
   role         role   @relation(fields: [role_id], references: [role_id])
   book        book[]
+  addtocart  addtocart[]
 }
 
 
@@ -43,5 +44,14 @@ model book {
   author        Int         
   user          user        @relation(fields: [author], references: [id])
   createdAt     DateTime    @default(now()) 
-  public        Boolean     @default(true)         
+  public        Boolean     @default(true)       
+  addtocart     addtocart[]  
+}
+
+model addtocart {
+  id          Int           @id @default(autoincrement())
+  book_id     Int
+  user_id     Int
+  user          user        @relation(fields: [user_id], references: [id])
+  book          book        @relation(fields: [book_id], references: [id])
 }

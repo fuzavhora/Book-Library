@@ -29,6 +29,63 @@ const getBook = async (data, body) => {
           { type: { contains: search } },
         ],
       };
+      // const book = await prisma.book.findMany({
+      //   where: searchquery,
+      //   include: {
+      //     user: {
+      //       select: {
+      //         id: true,
+      //         name: true,
+      //         img: true,
+      //       },
+      //     },
+      //   },
+      // });
+      // if (body) {
+      //   if (body.price) {
+      //     let finalData = priceFilter(book, body.price);
+      //     response = {
+      //       status: 200,
+      //       data: {
+      //         message: "Book fetched successfully",
+      //         finalData,
+      //       },
+      //     };
+      //   }
+      //   if (body.type) {
+      //     let finalData = book.filter((item) => item.type === body.type);
+      //     response = {
+      //       status: 200,
+      //       data: {
+      //         message: "Book fetched successfully",
+      //         finalData,
+      //       },
+      //     };
+      //   }
+      //   if (body.user) {
+      //     let finalData = book.filter((item) => item.user.name === body.user);
+      //     response = {
+      //       status: 200,
+      //       data: {
+      //         message: "Book fetched successfully",
+      //         finalData,
+      //       },
+      //     };
+      //   }
+      // } else {
+      //   response = {
+      //     status: 200,
+      //     data: {
+      //       message: "Book fetched successfully",
+      //       book,
+      //     },
+      //   };
+      // }
+      if (body.name || body.user || body.type) {
+        searchquery.name = body.name;
+        searchquery.user = body.user;
+        searchquery.type = body.type;
+      }
       const book = await prisma.book.findMany({
         where: searchquery,
         include: {
@@ -41,46 +98,6 @@ const getBook = async (data, body) => {
           },
         },
       });
-      if (body) {
-        if (body.price) {
-          let finalData = priceFilter(book, body.price);
-          response = {
-            status: 200,
-            data: {
-              message: "Book fetched successfully",
-              finalData,
-            },
-          };
-        }
-        if (body.type) {
-          let finalData = book.filter((item) => item.type === body.type);
-          response = {
-            status: 200,
-            data: {
-              message: "Book fetched successfully",
-              finalData,
-            },
-          };
-        }
-        if (body.user) {
-          let finalData = book.filter((item) => item.user.name === body.user);
-          response = {
-            status: 200,
-            data: {
-              message: "Book fetched successfully",
-              finalData,
-            },
-          };
-        }
-      } else {
-        response = {
-          status: 200,
-          data: {
-            message: "Book fetched successfully",
-            book,
-          },
-        };
-      }
     } else {
       console.log("getting all books");
 
