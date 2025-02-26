@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const { priceFilter } = require("../utils/filter");
+const { auth } = require("../utils/authentication");
 
 const getBook = async (data, body) => {
   let response = {
@@ -11,145 +12,69 @@ const getBook = async (data, body) => {
   };
 
   try {
-    // let search = data.search;
-    // console.log("Data = ", data);
     if (data.search) {
       let search = data.search;
       let searchquery = {};
-      searchquery = {
-        OR: [
-          { name: { contains: search } },
-          {
-            user: {
-              name: {
-                contains: search,
+      if (Number(search)) {
+        searchquery = {
+          OR: [
+            { name: { contains: search } },
+            {
+              author: {
+                name: {
+                  contains: search,
+                },
               },
             },
-          },
-          { type: { contains: search } },
-        ],
-      };
-      // const book = await prisma.book.findMany({
-      //   where: searchquery,
-      //   include: {
-      //     user: {
-      //       select: {
-      //         id: true,
-      //         name: true,
-      //         img: true,
-      //       },
-      //     },
-      //   },
-      // });
-      // if (body) {
-      //   if (body.price) {
-      //     let finalData = priceFilter(book, body.price);
-      //     response = {
-      //       status: 200,
-      //       data: {
-      //         message: "Book fetched successfully",
-      //         finalData,
-      //       },
-      //     };
-      //   }
-      //   if (body.type) {
-      //     let finalData = book.filter((item) => item.type === body.type);
-      //     response = {
-      //       status: 200,
-      //       data: {
-      //         message: "Book fetched successfully",
-      //         finalData,
-      //       },
-      //     };
-      //   }
-      //   if (body.user) {
-      //     let finalData = book.filter((item) => item.user.name === body.user);
-      //     response = {
-      //       status: 200,
-      //       data: {
-      //         message: "Book fetched successfully",
-      //         finalData,
-      //       },
-      //     };
-      //   }
-      // } else {
-      //   response = {
-      //     status: 200,
-      //     data: {
-      //       message: "Book fetched successfully",
-      //       book,
-      //     },
-      //   };
-      // }
-      if (body.name || body.user || body.type) {
-        searchquery.name = body.name;
-        searchquery.user = body.user;
-        searchquery.type = body.type;
-      }
-      const book = await prisma.book.findMany({
-        where: searchquery,
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              img: true,
-            },
-          },
-        },
-      });
-    } else {
-      console.log("getting all books");
-
-      const book = await prisma.book.findMany({
-        include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              img: true,
-            },
-          },
-        },
-      });
-      console.log(body.length);
-
-      if (body.price) {
-        let finalData = priceFilter(book, body.price);
-        response = {
-          status: 200,
-          data: {
-            message: "Book fetched successfully",
-            finalData,
-          },
-        };
-      } else if (body.type) {
-        let finalData = book.filter((item) => item.type === body.type);
-        response = {
-          status: 200,
-          data: {
-            message: "Book fetched successfully",
-            finalData,
-          },
-        };
-      } else if (body.user) {
-        let finalData = book.filter((item) => item.user.name === body.user);
-        response = {
-          status: 200,
-          data: {
-            message: "Book fetched successfully",
-            finalData,
-          },
+            { type: { contains: search } },
+            { price: { equals: Number(search) } },
+          ],
         };
       } else {
-        response = {
-          status: 200,
-          data: {
-            message: "Book fetched successfully",
-            book,
-          },
+        search = String(search).toLowerCase();
+        searchquery = {
+          OR: [
+            { name: { contains: search } },
+            {
+              author: {
+                name: {
+                  contains: search,
+                },
+              },
+            },
+            { type: { contains: search } },
+          ],
         };
       }
+      const books = await prisma.book.findMany({
+        where: searchquery,
+        include: {
+          author: true,
+        },
+      });
+      const activeBooks = books.filter((book) => book.isActive === true);
+      response = {
+        status: 200,
+        data: {
+          message: "Books fetched successfully",
+          books: activeBooks,
+        },
+      };
+    } else {
+      const books = await prisma.book.findMany({
+        include: {
+          author: true,
+        },
+      });
+      const activeBooks = books.filter((book) => book.isActive === true);
+
+      response = {
+        status: 200,
+        data: {
+          message: "Books fetched successfully",
+          books: activeBooks,
+        },
+      };
     }
   } catch (error) {
     console.log(error);

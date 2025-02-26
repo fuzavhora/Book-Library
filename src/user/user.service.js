@@ -109,7 +109,7 @@ const addtocart = async (body, header) => {
       },
     });
     if (user) {
-      for (const { book_id } of item) {
+      for (const { book_id, quantity } of item) {
         let cart;
         let book = await prisma.book.findUnique({
           where: { id: book_id },
@@ -123,17 +123,26 @@ const addtocart = async (body, header) => {
             },
           });
         } else {
-          cart = await prisma.addtocart.create({
-            data: {
+          let cart = await prisma.addtocart.findFirst({
+            where: {
               user_id: user.id,
               book_id: book_id,
             },
           });
+          if (!cart) {
+            cart = await prisma.addtocart.create({
+              data: {
+                user_id: user.id,
+                book_id: book_id,
+                quantity: quantity,
+              },
+            });
+            cartItem.push(cart);
+          }
         }
-        cartItem.push(cart);
       }
       response = {
-        status: 400,
+        status: 201,
         data: {
           message: "Added cart item successfully",
           cartItem: cartItem,

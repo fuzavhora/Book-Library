@@ -119,6 +119,14 @@ const deleteAuthor = async (body, header) => {
           isActive: false,
         },
       });
+      const deleteBook = await prisma.book.updateMany({
+        where: {
+          author_id: data.id,
+        },
+        data: {
+          isActive: false,
+        },
+      });
       response = {
         status: 200,
         data: {
