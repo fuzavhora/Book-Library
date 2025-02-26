@@ -21,7 +21,8 @@ model user {
   email         String          @unique
   password      String
   img           String?
-  role_id       Int
+  isActive      Boolean?        @default(true) 
+  role_id       Int             @default(3)
   role          role            @relation(fields: [role_id], references: [id])
   addtocart     addtocart[]
   payment       payment[]
@@ -33,7 +34,8 @@ model author {
   email         String          @unique
   password      String
   img           String?
-  role_id       Int
+  isActive      Boolean?        @default(true) 
+  role_id       Int             @default(1)
   Income        Int?          
   role          role            @relation(fields: [role_id], references: [id])
   book          book[]
@@ -42,7 +44,7 @@ model author {
 
 
 model role {
-  id      Int             @id @default(autoincrement())
+  id           Int              @id @default(autoincrement())
   name         String
   user         user[]
   author       author[]
@@ -50,15 +52,16 @@ model role {
 
 
 model book {
-  id            Int           @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   name          String
   price         Int
   des           String
   type          String
   author_id     Int         
-  author        author        @relation(fields: [author_id], references: [id])
-  createdAt     DateTime      @default(now()) 
-  public        Boolean       @default(true)       
+  isActive      Boolean?        @default(true) 
+  author        author          @relation(fields: [author_id], references: [id])
+  createdAt     DateTime        @default(now()) 
+  public        Boolean         @default(true)       
   addtocart     addtocart[]  
   payment       payment[]
 }
@@ -67,7 +70,8 @@ model addtocart {
   id             Int           @id @default(autoincrement())
   book_id        Int
   user_id        Int
-  quantity       Int
+  isActive       Boolean?      @default(true) 
+  quantity       Int?          @default(1)
   user           user          @relation(fields: [user_id], references: [id])
   book           book          @relation(fields: [book_id], references: [id])
   payment        payment[]
@@ -90,7 +94,7 @@ model payment {
   books               Int
   payment_type        Int   
   cart_id             Int
-  total_price         Int      
+  total_price         Int     
   book                book                  @relation(fields: [books], references:[id])
   author_profit       Int
   addtocart           addtocart             @relation(fields : [cart_id], references:[id])

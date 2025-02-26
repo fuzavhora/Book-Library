@@ -7,16 +7,6 @@ router.post("/create", async (req, res) => {
   res.status(model.status).send(model.data);
 });
 
-// router.get("/getUser", async (req, res) => {
-//   const model = await userController.getUser(req.query);
-//   res.status(model.status).send(model.data);
-// });
-
-router.post("/update", userAuth(), async (req, res) => {
-  const model = await userController.updateUser(req.body, req.headers);
-  res.status(model.status).send(model.data);
-});
-
 router.post("/addtocart", cartAuth(), async (req, res) => {
   const model = await userController.addtocart(req.body, req.headers);
   res.status(model.status).send(model.data);

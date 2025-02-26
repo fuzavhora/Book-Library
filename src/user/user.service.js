@@ -12,36 +12,31 @@ const create = async (data) => {
   };
 
   try {
-    if (data) {
-      if (data.name && data.user && data.type) {
-        data.password = await bcrypt.hash(data.password, 10);
-        const user = await prisma.user.create({
-          data: data,
-        });
-
-        response = {
-          status: 200,
-          data: {
-            message: "User created successfully",
-            user: user,
-          },
-        };
-      } else {
-        response = {
-          status: 400,
-          data: {
-            message: "Please enter All required fields",
-          },
-        };
-      }
-    } else {
-      response = {
-        status: 401,
+    if (!data) {
+      return (response = {
+        status: 400,
         data: {
-          message: "Please enter All required feilds",
+          message: "Please fill all the fields",
         },
-      };
+      });
     }
+    const { name, email, password, role_id } = data;
+    const hashPassword = await bcrypt.hash(password, 10);
+    const user = await prisma.user.create({
+      data: {
+        name: name,
+        email: email,
+        password: hashPassword,
+        role_id: parseInt(role_id),
+      },
+    });
+    response = {
+      status: 200,
+      data: {
+        message: "User created successfully",
+        user: user,
+      },
+    };
   } catch (error) {
     console.log(error);
   }
@@ -116,17 +111,17 @@ const addtocart = async (body, header) => {
     if (user) {
       for (const { book_id } of item) {
         let cart;
-        let book = await prisma.book.findMany({
+        let book = await prisma.book.findUnique({
           where: { id: book_id },
         });
 
         if (!book) {
-          response = {
+          return (response = {
             status: 400,
             data: {
               message: "Book not found",
             },
-          };
+          });
         } else {
           cart = await prisma.addtocart.create({
             data: {
@@ -182,7 +177,6 @@ const getCart = async (header) => {
         },
         include: {
           book: true,
-          user: true,
         },
       });
       console.log(cart);
@@ -209,4 +203,4 @@ const getCart = async (header) => {
   }
   return response;
 };
-module.exports = { create, updateUser, addtocart, getCart };
+module.exports = { create, addtocart, getCart };

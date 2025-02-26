@@ -7,6 +7,11 @@ router.post("/login", async (req, res) => {
   res.status(model.status).send(model.data);
 });
 
+router.post("/update", userAuth(), async (req, res) => {
+  const model = await profileController.updateUser(req.body, req.headers);
+  res.status(model.status).send(model.data);
+});
+
 router.delete("/delete", userAuth(), async (req, res) => {
   const model = await profileController.deleteUser(req.headers);
   res.status(model.status).send(model.data);

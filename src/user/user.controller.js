@@ -10,10 +10,6 @@ const create = async (data) => {
   return await userService.create(data);
 };
 
-const updateUser = async (body, header) => {
-  return await userService.updateUser(body, header);
-};
-
 const addtocart = async (body, header) => {
   return await userService.addtocart(body, header);
 };
@@ -22,4 +18,4 @@ const getCart = async (header) => {
   return await userService.getCart(header);
 };
 
-module.exports = { create, updateUser, addtocart, getCart };
+module.exports = { create, addtocart, getCart };
