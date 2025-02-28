@@ -138,6 +138,16 @@ const addtocart = async (body, header) => {
               },
             });
             cartItem.push(cart);
+          } else {
+            cart = await prisma.addtocart.update({
+              where: {
+                id: cart.id,
+              },
+              data: {
+                quantity: quantity,
+              },
+            });
+            cartItem.push(cart);
           }
         }
       }

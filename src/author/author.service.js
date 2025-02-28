@@ -47,7 +47,7 @@ const login = async (data) => {
 
   try {
     const { email, password } = data;
-    const user = await prisma.author.findUnique({
+    const user = await prisma.author.findFirst({
       where: {
         email: email,
       },
